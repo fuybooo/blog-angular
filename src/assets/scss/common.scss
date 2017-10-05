@@ -1,0 +1,78 @@
+body {
+  color: #333 !important; // 覆盖ng-zorro中的颜色
+  font-size: 14px !important; // 覆盖ng-zorro中的字体大小
+  background: #fff;
+  transition: background 1s cubic-bezier(.075, .82, .165, 1);
+}
+.text-tip {
+  color: $color-black-light;
+}
+.anticon-click {
+  cursor: pointer;
+  &:hover {
+    color: $color-nav-hover;
+  }
+}
+.text-primary {
+  color: $color-primary;
+  &:hover {
+    color: $color-nav-hover;
+  }
+}
+
+.middle-text-30 {
+  height: 30px;
+  line-height: 30px;
+}
+
+.table-layout-fixed {
+  table-layout: fixed; /* 表格固定布局，配合表格中的文本裁剪使用 */
+}
+
+.td-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: keep-all;
+  text-overflow: ellipsis;
+}
+
+[type="file"] {
+  display: none!important;
+}
+.anticon-close-circle.import-close-circle {
+  cursor: pointer;
+  color: $color-gray-light-bg;
+  vertical-align: 4px;
+  font-size: 16px;
+  margin-left: 10px;
+  &:hover {
+    color: $color-gray-light-bg-hover;
+  }
+}
+//.close-circle {
+//  display: inline-block;
+//  background: $color-gray-light-bg;
+//  border-radius: 50%;
+//  text-align: center;
+//  line-height: 20px;
+//  font-size: 20px;
+//  font-weight: bold;
+//  color: $color-white;
+//  padding: 0;
+//  width: 20px;
+//  height: 20px;
+//  cursor: pointer;
+//  &:hover {
+//    background: $color-gray-light-bg-hover;
+//  }
+//}
+
+.img-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: center no-repeat;
+  &.img-icon-file-csv{
+  }
+}
+

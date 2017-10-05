@@ -1,0 +1,794 @@
+/* css tools */
+
+/*  对于数量单位有如下规则   */
+
+/*  1.数字单位为px，如w20表示width: 20px;  */
+
+/*  2.下划线代表百分比，如w_90表示width: 90%;  */
+
+/*  3.中划线代表负值，如w-100表示width: -100px;  */
+
+/*  4.综合：w-_100表示width: -100%;  */
+
+/*  5.特例：因为比较常用的关系，w表示width: 100%;等等  */
+.lh30 {
+  line-height: 30px;
+}
+
+.lh34 {
+  line-height: 34px;
+}
+
+.lh50 {
+  line-height: 50px;
+}
+
+.lh64 {
+  line-height: 64px;
+}
+
+.lh64i {
+  line-height: 64px!important;
+}
+
+.m0a {
+  margin: 0 auto;
+}
+.vv {
+  visibility: visible;
+}
+.vh {
+  visibility: hidden;
+}
+.va3 {
+  vertical-align: 3px;
+}
+.va6 {
+  vertical-align: 6px;
+}
+
+/* color */
+.c-f {
+  color: #fff;
+}
+
+.c-f00 {
+  color: #f00;
+}
+
+.c-red {
+  color: #f00;
+}
+
+.c-555 {
+  color: #555;
+}
+
+.c-333 {
+  color: #333;
+}
+
+/* cursor */
+.cp {
+  cursor: pointer;
+}
+
+.cd {
+  cursor: default;
+}
+
+/* display */
+.dn {
+  display: none;
+}
+
+.dni {
+  display: none !important;
+}
+
+.di {
+  display: inline;
+}
+
+.db {
+  display: block;
+}
+
+.dif {
+  display: inline-flex;
+}
+
+.df {
+  display: flex;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.oh {
+  overflow: hidden;
+}
+
+.ohi {
+  overflow: hidden!important;
+}
+
+.oa {
+  overflow: auto;
+}
+
+.oai {
+  overflow: auto!important;
+}
+
+/* position */
+.pa {
+  position: absolute;
+}
+
+.pr {
+  position: relative;
+}
+
+.pri {
+  position: relative !important;
+}
+
+.pf {
+  position: fixed;
+}
+
+/* float */
+.fl {
+  float: left;
+}
+
+.fli {
+  float: left !important;
+}
+
+.fr {
+  float: right;
+}
+
+.fri {
+  float: right !important;
+}
+
+
+.cb {
+  clear: both;
+}
+
+/* background-color */
+.bgc-dff0d8 {
+  background-color: #dff0d8;
+}
+.bgc-f {
+  background-color: #fff;
+}
+
+/* border-radius */
+.br0i {
+  border-radius: 0 !important;
+}
+.bbni {
+  border-bottom: none;
+}
+
+.f9 {
+  font-size: 9px;
+}
+
+.f12 {
+  font-size: 12px;
+}
+
+.f14 {
+  font-size: 14px;
+}
+
+.f16 {
+  font-size: 16px;
+}
+
+.f20 {
+  font-size: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* bootstrap中已经有对应的样式了 */
+.tac {
+  text-align: center;
+}
+
+.tal {
+  text-align: left;
+}
+
+.tar {
+  text-align: right;
+}
+
+/* width */
+.w {
+  width: 100%;
+}
+
+.w5 {
+  width: 5px;
+}
+
+.w10 {
+  width: 10px;
+}
+
+.w11 {
+  width: 11px;
+}
+
+.w18 {
+  width: 18px;
+}
+
+.w50 {
+  width: 50px;
+}
+
+.w60 {
+  width: 60px;
+}
+
+.w66 {
+  width: 66px;
+}
+
+.w70 {
+  width: 70px;
+}
+
+.w90 {
+  width: 90px;
+}
+
+.w100 {
+  width: 100px;
+}
+
+.w120 {
+  width: 120px;
+}
+
+.w150 {
+  width: 150px;
+}
+
+.w195 {
+  width: 195px;
+}
+
+.w240 {
+  width: 240px;
+}
+
+.w260 {
+  width: 260px;
+}
+
+.w260i {
+  width: 260px !important;
+}
+
+.w320 {
+  width: 320px;
+}
+
+.w320i {
+  width: 320px !important;
+}
+
+.w480 {
+  width: 480px;
+}
+
+.w1000 {
+  width: 1000px;
+}
+
+.w1400 {
+  width: 1400px;
+}
+
+.w_1 {
+  width: 1%;
+}
+
+.w_5 {
+  width: 5%;
+}
+
+.w_10 {
+  width: 10%;
+}
+
+.w_11 {
+  width: 11%;
+}
+
+.w_20 {
+  width: 20%;
+}
+
+.w_30i {
+  width: 30%!important;
+}
+
+.w_40 {
+  width: 40%;
+}
+.w_41_3i {
+  width: 41.3%!important;
+}
+
+.w_45 {
+  width: 45%;
+}
+
+/* 46.5% */
+.w_46-5 {
+  width: 46.5%;
+}
+
+.w_48 {
+  width: 48%;
+}
+
+.w_50 {
+  width: 50%;
+}
+
+.w_70i {
+  width: 70%!important;
+}
+
+.w_80 {
+  width: 80%;
+}
+
+.w_90 {
+  width: 90%;
+}
+
+/* 配合栅格系统使用 .w__1_6代表 1/6 */
+.w__1_6 {
+  width: 16.6666666666666%;
+}
+
+.min-w1000 {
+  min-width: 1000px;
+}
+
+.min-w890i {
+  min-width: 890px !important;
+}
+
+/* height */
+.h {
+  height: 100%;
+}
+
+.h18 {
+  height: 18px;
+}
+
+.h20 {
+  height: 20px;
+}
+
+.h20i {
+  height: 20px !important;
+}
+
+.h30 {
+  height: 30px;
+}
+
+.h40 {
+  height: 40px;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.h70 {
+  height: 70px;
+}
+
+.h100 {
+  height: 100px;
+}
+
+.h200 {
+  height: 200px;
+}
+
+.h260 {
+  height: 260px;
+}
+
+.h300 {
+  height: 300px;
+}
+
+.h300i {
+  height: 300px!important;
+}
+
+.h320 {
+  height: 320px;
+}
+
+.h300i {
+  height: 300px !important;
+}
+
+.h400 {
+  height: 400px;
+}
+
+.h600 {
+  height: 600px;
+}
+
+.min-h400 {
+  min-height: 400px;
+}
+
+.min-h530 {
+  min-height: 530px;
+}
+
+.min-h600 {
+  min-height: 600px;
+}
+
+/* top */
+.t50 {
+  top: 50px;
+}
+
+.t60 {
+  top: 60px;
+}
+
+.t61 {
+  top: 61px;
+}
+
+.t70 {
+  top: 70px;
+}
+
+.t100 {
+  top: 100px;
+}
+
+.t_50 {
+  top: 50%;
+}
+
+/* right */
+.r {
+}
+
+/* bottom */
+.b0 {
+  bottom: 0;
+}
+
+/* left */
+.l100 {
+  left: 100px;
+}
+
+.m0 {
+  margin: 0;
+}
+
+.m010 {
+  margin: 0 10px;
+}
+
+.m0i {
+  margin: 0 !important;
+}
+
+.m15_0 {
+  margin: 15px 0;
+}
+
+.m30_0 {
+  margin: 30px 0;
+}
+
+/* margin-top */
+.mt0 {
+  margin-top: 0;
+}
+
+.mt0i {
+  margin-top: 0 !important;
+}
+
+.mt7 {
+  margin-top: 7px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.mt-35 {
+  margin-top: -35px;
+}
+
+.mt100 {
+  margin-top: 100px;
+}
+
+/* margin-right */
+.mr0i {
+  margin-right: 0!important;
+}
+.mr2 {
+  margin-right: 2px;
+}
+.mr3 {
+  margin-right: 3px;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+.mr8 {
+  margin-right: 8px;
+}
+
+.mr10 {
+  margin-right: 10px;
+}
+
+.mr15 {
+  margin-right: 15px;
+}
+
+.mr30 {
+  margin-right: 30px;
+}
+
+/* margin-bottom */
+.mb0 {
+  margin-bottom: 0;
+}
+
+.mb0i {
+  margin-bottom: 0 !important;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
+}
+
+/* margin-left */
+.ml3 {
+  margin-left: 3px;
+}
+
+.ml5 {
+  margin-left: 5px;
+}
+
+.ml3i {
+  margin-left: 3px !important;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.ml30 {
+  margin-left: 30px;
+}
+
+.ml100 {
+  margin-left: 100px;
+}
+
+.ml260 {
+  margin-left: 260px;
+}
+
+.ml298 {
+  margin-left: 298px;
+}
+
+.ml356 {
+  margin-left: 356px;
+}
+
+/* 配合栅格系统使用 ml__1_36代表1/36 */
+.ml__1_18 {
+  margin-left: 5.5555555555%;
+}
+
+.ml__1_36 {
+  margin-left: 2.7777777777%;
+}
+
+.ml_11 {
+  margin-left: 11%;
+}
+
+/* padding */
+.p0 {
+  padding: 0;
+}
+
+.p10 {
+  padding: 10px;
+}
+
+/* 简写两个值的情况 0为特殊情况，可以不用加下划线*/
+.p05 {
+  padding: 0 5px;
+}
+
+.p010 {
+  padding: 0 10px;
+}
+
+.p5_10 {
+  padding: 5px 10px;
+}
+
+.p4_12 {
+  padding: 4px 12px;
+}
+
+.p0_24_24 {
+  padding: 0 24px 24px;
+}
+
+/* padding-top */
+.pt0i {
+  padding-top: 0 !important;
+}
+
+.pt20 {
+  padding-top: 20px;
+}
+
+.pt32 {
+  padding-top: 32px;
+}
+
+.pt32i {
+  padding-top: 32px !important;
+}
+
+.pt40 {
+  padding-top: 40px;
+}
+
+.pt52i {
+  padding-top: 52px !important;
+}
+
+.pt100 {
+  padding-top: 100px;
+}
+.pt__25 {
+  padding-top: 25vh;
+}
+
+/* pr已经被占用，这时加上第二个字母以示区分 */
+
+/* padding-right */
+.pri0 {
+  padding-right: 0;
+}
+
+.pri0i {
+  padding-right: 0 !important;
+}
+
+.pri5 {
+  padding-right: 5px;
+}
+
+.pri10 {
+  padding-right: 10px;
+}
+
+.pri15 {
+  padding-right: 15px;
+}
+
+.pb5 {
+  padding-bottom: 5px;
+}
+
+.pb10 {
+  padding-bottom: 10px;
+}
+
+.pb20 {
+  padding-bottom: 20px;
+}
+
+.pb40 {
+  padding-bottom: 40px;
+}
+
+.pb50 {
+  padding-bottom: 50px;
+}
+
+/* padding-left */
+.pl0 {
+  padding-left: 0;
+}
+
+.pl0i {
+  padding-left: 0 !important;
+}
+
+.pl5 {
+  padding-left: 5px;
+}
+
+.pl10 {
+  padding-left: 10px;
+}
+
+.pl20 {
+  padding-left: 20px;
+}
+
+.pl_3 {
+  padding-left: 3%;
+}
+
+.pl_4 {
+  padding-left: 4%;
+}
+
+.pl_10 {
+  padding-left: 10%;
+}
+
+.pl356 {
+  padding-left: 356px;
+}
