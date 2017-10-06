@@ -1,3 +1,6 @@
 <div>
-  home
+  <nz-input
+    [(ngModel)]="inputValue"
+    [nzPlaceHolder]="'请内容'"
+    (ngModelChange)="send($event)"></nz-input>
 </div>

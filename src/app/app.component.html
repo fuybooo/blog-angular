@@ -13,13 +13,15 @@
               [class.oai]="enterSide"
               [class.ohi]="!enterSide"
               (mouseenter)="enterSide=true"
-              (mouseleave)="enterSide=false">
+              (mouseleave)="enterSide=false"
+              [class.dni]="isHome"
+    >
       <ul nz-menu [nzMode]="'inline'" class="h">
         <li nz-menu-item>用户管理</li>
       </ul>
     </nz-sider>
-    <nz-layout class="pl20">
-      <nz-breadcrumb class="m15_0">
+    <nz-layout [class.pl20]="!isHome">
+      <nz-breadcrumb class="m15_0" [class.dni]="isHome">
         <nz-breadcrumb-item>Home</nz-breadcrumb-item>
         <nz-breadcrumb-item>List</nz-breadcrumb-item>
         <nz-breadcrumb-item>App</nz-breadcrumb-item>

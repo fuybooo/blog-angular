@@ -8,12 +8,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterModule} from "@angular/router";
 import {routes} from "./app.router";
 import {NgZorroAntdModule} from "ng-zorro-antd";
-import {CustomScrollbarDirective} from "./shared/custom-scrollbar/custom-scrollbar";
+import {CommonService} from "./shared/common.service";
+import {HomeGuard} from "./shared/guard/home-guard.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomScrollbarDirective
   ],
   imports: [
     BrowserModule,
@@ -24,7 +24,7 @@ import {CustomScrollbarDirective} from "./shared/custom-scrollbar/custom-scrollb
     NgZorroAntdModule.forRoot({extraFontName: 'anticon', extraFontUrl: './assets/fonts/iconfont'}),
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [CommonService, HomeGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
