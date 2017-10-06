@@ -9,6 +9,7 @@ import {slideInDownAnimation} from "../shared/animations";
 export class HomeComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   inputValue;
+  webSocket = new WebSocket('ws://localhost:8001/');
   constructor() { }
 
   ngOnInit() {
@@ -17,16 +18,16 @@ export class HomeComponent implements OnInit {
 
   send(value) {
     console.log(`输入：${value}`);
+    this.webSocket.send(value);
   }
   doWebSocket() {
-    let webSocket = new WebSocket('ws://localhost:8001/');
-    webSocket.onopen = () => {
+    this.webSocket.onopen = () => {
       console.log('webscoket open');
     };
-    webSocket.onclose = () => {
+    this.webSocket.onclose = () => {
       console.log('webscoket close');
     };
-    webSocket.onmessage = (e) => {
+    this.webSocket.onmessage = (e) => {
       console.log(`webscoket message: ${e.data}`);
     };
   }
