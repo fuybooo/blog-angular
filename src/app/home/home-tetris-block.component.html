@@ -1,0 +1,8 @@
+<ng-container *ngFor="let outer of data; let i = index;">
+  <div *ngFor="let inner of outer; let j = index;"
+       [class.block-none]="inner===0"
+       [class.block-done]="inner===1"
+       [class.block-current]="inner===2"
+       [ngStyle]="{top: i * 20 + 'px', left: j * 20 + 'px'}"
+  ></div>
+</ng-container>

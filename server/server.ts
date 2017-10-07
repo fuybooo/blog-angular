@@ -1,10 +1,18 @@
-import {Server} from 'ws';
+let app = require('express')();
+let server = require('http').createServer(app);
+let io = require('socket.io')(server);
+let count = 0;
 const PORT = 8001;
-const wsServer = new Server({port: PORT});
-wsServer.on("connection", websocket => {
-  websocket.on('message', (message: string) => {
-    console.log('server:', message);
-    websocket.send('data form server');
+io.on('connection', (client) => {
+  // 连接时
+  client.nickName = `user${++count}`;
+  io.emit('enter', {nickName: client.nickName, message: 'come in'});
+  client.on('message', (str) => {
+    io.emit('message', {nickName: client.nickName, message: str});
+  });
+  client.on('disconnect', () => {
+    io.emit('leave', {nickName: client.nickName, message: 'left'});
   });
 });
-console.log(`websocket run at port ${PORT}`);
+server.listen(PORT);
+console.log(`服务已经启动在端口${PORT}`);

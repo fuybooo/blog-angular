@@ -26,6 +26,7 @@
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "ng-zorro-antd": "^0.5.3",
     "rxjs": "^5.4.2",
+    "socket.io": "^2.0.3",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3",
-    "gulp-typescript": "^3.1.7",
-    "ws": "^3.1.0"
+    "gulp-typescript": "^3.1.7"
   }
 }

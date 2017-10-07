@@ -1,0 +1,27 @@
+<div>
+  <h2>websocket练习——聊天室</h2>
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="12">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="24">
+          <ul class="message-box">
+            <li class="message-item" *ngFor="let message of messages">
+              <span class="user">{{message.nickName}}</span>
+              <span class="content">{{message.message}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="8" class="mt20">
+        <div nz-col [nzSpan]="21">
+          <nz-input
+            [(ngModel)]="inputValue"
+            [nzPlaceHolder]="'请输入内容'"></nz-input>
+        </div>
+        <div nz-col [nzSpan]="3">
+          <button class="w" nz-button [nzType]="'primary'" (click)="send()"><span>发送</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

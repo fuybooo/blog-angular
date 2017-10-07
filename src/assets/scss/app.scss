@@ -13,26 +13,47 @@
   cursor: pointer;
 }
 .content-wrap {
-
+  padding: 20px;
 }
-/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-::-webkit-scrollbar
-{
-  width: 5px;
-  height: 5px;
-  background-color: #e7e7e7;
+.message-box {
+  border: 1px solid #b9b0b0;
+  height: 300px;
+  padding: 10px;
 }
-/*定义滚动条轨道 内阴影+圆角*/
-::-webkit-scrollbar-track
-{
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  border-radius: 0;
-  background-color: #F5F5F5;
+.host-game-box, .game-next-box{
+  border: 1px solid #1A6FB0;
+  background-color: #F4FEEE;
+  position: absolute;
 }
-/*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-thumb
-{
-  border-radius: 0;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  background-color: #6e6e6e;
+.host-game-box {
+  border-top: none;
+  width: 202px;
+  height: 401px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.game-next-box {
+  width: 82px;
+  height: 82px;
+}
+.block-current, .block-none, .block-done {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  position: absolute;
+}
+.block-current {
+  border: 1px solid #FE1C18;
+  background-color: #FE896B;
+}
+.block-none {
+  border: 1px solid #F4FEEE;
+  background-color: #F4FEEE;
+}
+.block-done {
+  border: 1px solid #636363;
+  background-color: #3F3F3F;
+}
+.game-info {
+  margin-top: 100px;
 }
