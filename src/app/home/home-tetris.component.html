@@ -1,14 +1,57 @@
 <div>
-  <h2>websocket练习——单机火拼俄罗斯</h2>
+  <h2>websocket练习——火拼俄罗斯</h2>
   <div nz-row [nzGutter]="0">
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="6">
+      <p>我的游戏区域</p>
+      <p>{{msg}}</p>
+    </div>
+    <div nz-col [nzOffset]="6" [nzSpan]="6">
+      <p>对方游戏区域</p>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="0">
+    <div nz-col [nzSpan]="6">
       <div class="host-game-box">
-        <app-home-tetris-block [data]="gameData"></app-home-tetris-block>
+        <app-home-tetris-block [data]="gameData"
+                               [next]="next"
+                               [isHost]="true"
+                               (nextEmitter)="changeNext($event)"
+                               (timeChange)="changeTime($event)"
+                               (scoreChange)="changeScore($event)"
+                               (isGameOverChange)="changeGameOver()"
+        ></app-home-tetris-block>
       </div>
     </div>
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="6">
       <div class="game-next-box">
-        <app-home-tetris-block [data]="next.data"></app-home-tetris-block>
+        <app-home-tetris-block [isNext]="true"
+                               [data]="next.data"
+                               [next]="next"
+        ></app-home-tetris-block>
+      </div>
+      <div class="game-info">
+        <p>已经用时：{{time}}s</p>
+        <p>已经得分：{{score}}分</p>
+        <p [hidden]="!isGameOver">GAME OVER</p>
+        <div>
+          <button nz-button [nzType]="'primary'" (click)="start()"><span>开始</span></button>
+        </div>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <div class="host-game-box">
+        <app-home-tetris-block [data]="remoteData"
+                               [next]="next"
+                               [isHost]="false"
+        ></app-home-tetris-block>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <div class="game-next-box">
+        <app-home-tetris-block [isNext]="true"
+                               [data]="next.data"
+                               [next]="next"
+        ></app-home-tetris-block>
       </div>
       <div class="game-info">
         <p>已经用时：{{time}}s</p>
@@ -17,4 +60,11 @@
       </div>
     </div>
   </div>
+
+  <div>
+    <button nz-button [nzType]="'primary'" (click)="testUp()">
+      <span>up</span>
+    </button>
+  </div>
+
 </div>

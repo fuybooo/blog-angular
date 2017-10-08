@@ -4,15 +4,18 @@
   let io = require('socket.io')(server);
   let count = 0;
   const PORT = 8001;
+  let socketMap: any = {};
   io.on('connection', (client) => {
     // 连接时
-    client.nickName = `user${++count}`;
-    io.emit('enter', {nickName: client.nickName, message: 'come in'});
-    client.on('message', (str) => {
-      io.emit('message', {nickName: client.nickName, message: str});
-    });
+    client.count = ++count;
+    socketMap[count] = client;
+    if (count % 2 === 1) {
+      client.emit('waiting', 'Waiting for another person');
+    } else {
+      client.emit('start');
+      socketMap[count - 1].emit('start');
+    }
     client.on('disconnect', () => {
-      io.emit('leave', {nickName: client.nickName, message: 'left'});
     });
   });
   server.listen(PORT);

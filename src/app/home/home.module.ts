@@ -6,6 +6,7 @@ import {SharedModule} from "../shared/shared.module";
 import {HomeChatComponent} from "./home-chat.component";
 import {HomeTetrisComponent} from "./home-tetris.component";
 import {HomeTetrisBlockComponent} from "./home-tetris-block.component";
+import {HomeTetrisService} from "./home-tetris.service";
 @NgModule({
   imports: [
     SharedModule,
@@ -17,6 +18,9 @@ import {HomeTetrisBlockComponent} from "./home-tetris-block.component";
     HomeTetrisComponent,
     HomeTetrisBlockComponent
   ],
+  providers: [
+    HomeTetrisService
+  ]
 })
 export class HomeModule {
 }
