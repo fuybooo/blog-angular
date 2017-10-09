@@ -3,7 +3,7 @@
     var server = require('http').createServer(app);
     var io_1 = require('socket.io')(server);
     var count_1 = 0;
-    var PORT = 8001;
+    var PORT = 3000;
     io_1.on('connection', function (client) {
         // 连接时
         client.nickName = "user" + ++count_1;

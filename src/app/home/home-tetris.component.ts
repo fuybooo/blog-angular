@@ -54,9 +54,12 @@ export class HomeTetrisComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
+  remoteNext;
   next;
   time = 0;
+  remoteTime = 0;
   score = 0;
+  remoteScore = 0;
   isGameOver;
   msg: string;
   constructor(private tetrisService: HomeTetrisService) {}

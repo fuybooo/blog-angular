@@ -41,7 +41,7 @@
     <div nz-col [nzSpan]="6">
       <div class="host-game-box">
         <app-home-tetris-block [data]="remoteData"
-                               [next]="next"
+                               [next]="remoteNext"
                                [isHost]="false"
         ></app-home-tetris-block>
       </div>
@@ -49,22 +49,15 @@
     <div nz-col [nzSpan]="6">
       <div class="game-next-box">
         <app-home-tetris-block [isNext]="true"
-                               [data]="next.data"
-                               [next]="next"
+                               [data]="remoteNext.data"
+                               [next]="remoteNext"
         ></app-home-tetris-block>
       </div>
       <div class="game-info">
-        <p>已经用时：{{time}}s</p>
-        <p>已经得分：{{score}}分</p>
+        <p>已经用时：{{remoteTime}}s</p>
+        <p>已经得分：{{remoteScore}}分</p>
         <p [hidden]="!isGameOver">GAME OVER</p>
       </div>
     </div>
   </div>
-
-  <div>
-    <button nz-button [nzType]="'primary'" (click)="testUp()">
-      <span>up</span>
-    </button>
-  </div>
-
 </div>

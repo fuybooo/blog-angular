@@ -37,6 +37,7 @@ export class HomeTetrisBlockComponent implements OnInit {
   handleCommand() {
     this.tetrisService.commandEmitter.subscribe(command => {
       switch (command) {
+        // 接到开始命令
         case 'start':
           if (!isStarted) {
             this.reset();

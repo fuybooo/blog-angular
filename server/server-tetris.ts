@@ -3,7 +3,7 @@
   let server = require('http').createServer(app);
   let io = require('socket.io')(server);
   let count = 0;
-  const PORT = 8001;
+  const PORT = 3000;
   let socketMap: any = {};
   io.on('connection', (client) => {
     // 连接时

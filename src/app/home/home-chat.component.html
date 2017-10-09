@@ -16,7 +16,8 @@
         <div nz-col [nzSpan]="21">
           <nz-input
             [(ngModel)]="inputValue"
-            [nzPlaceHolder]="'请输入内容'"></nz-input>
+            [nzPlaceHolder]="'请输入内容'"
+            (keydown.enter)="send()"></nz-input>
         </div>
         <div nz-col [nzSpan]="3">
           <button class="w" nz-button [nzType]="'primary'" (click)="send()"><span>发送</span></button>
