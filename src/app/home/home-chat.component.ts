@@ -11,7 +11,7 @@ export class HomeChatComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   inputValue;
   messages: any[] = [];
-  socket = io('ws://192.168.7.58:3000/');
+  socket = io('ws://localhost:3000/');
   constructor() { }
 
   ngOnInit() {

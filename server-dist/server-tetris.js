@@ -4,18 +4,39 @@
     var io = require('socket.io')(server);
     var count_1 = 0;
     var PORT = 3000;
-    var socketMap_1 = {};
-    io.on('connection', function (client) {
-        // 连接时
-        client.count = ++count_1;
-        socketMap_1[count_1] = client;
-        if (count_1 % 2 === 1) {
-            client.emit('waiting', 'Waiting for another person');
+    var clientMap_1 = {};
+    var getAnother_1 = function (client) {
+        if (client._count % 2 === 1) {
+            return clientMap_1[client._count + 1];
         }
         else {
-            client.emit('start');
-            socketMap_1[count_1 - 1].emit('start');
+            return clientMap_1[client._count - 1];
         }
+    };
+    io.on('connection', function (client) {
+        // 连接时
+        client._count = ++count_1;
+        clientMap_1[count_1] = client;
+        // if (count % 2 === 1) {
+        //   client.emit('waiting', 'Waiting for another person');
+        // } else {
+        //   client.emit('start');
+        //   clientMap[count - 1].emit('start');
+        // }
+        // 准备
+        client.on('ready', function () {
+            client._ready = true;
+            var another = getAnother_1(client);
+            if (another && another._ready) {
+                var data = { type: Math.floor(Math.random() * 7), directive: Math.floor(Math.random() * 4) };
+                client.emit('start', data);
+                another.emit('start', data);
+            }
+        });
+        // 初始化
+        client.on('init', function (data) {
+            getAnother_1(client).emit('init', data);
+        });
         client.on('disconnect', function () {
         });
     });

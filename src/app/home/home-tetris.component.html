@@ -13,8 +13,11 @@
     <div nz-col [nzSpan]="6">
       <div class="host-game-box">
         <app-home-tetris-block [data]="gameData"
+                               [remoteData]="remoteData"
                                [next]="next"
                                [isHost]="true"
+                               [curType]="curType"
+                               [curDirective]="curDirective"
                                (nextEmitter)="changeNext($event)"
                                (timeChange)="changeTime($event)"
                                (scoreChange)="changeScore($event)"
@@ -25,7 +28,8 @@
     <div nz-col [nzSpan]="6">
       <div class="game-next-box">
         <app-home-tetris-block [isNext]="true"
-                               [data]="next.data"
+                               [isHost]="true"
+                               [data]="next?.data"
                                [next]="next"
         ></app-home-tetris-block>
       </div>
@@ -34,7 +38,7 @@
         <p>已经得分：{{score}}分</p>
         <p [hidden]="!isGameOver">GAME OVER</p>
         <div>
-          <button nz-button [nzType]="'primary'" (click)="start()"><span>开始</span></button>
+          <button nz-button [nzType]="'primary'" (click)="ready($event)">准备</button>
         </div>
       </div>
     </div>
@@ -43,13 +47,14 @@
         <app-home-tetris-block [data]="remoteData"
                                [next]="remoteNext"
                                [isHost]="false"
+                               (remoteDataEmitter)="changeRemoteData($event)"
         ></app-home-tetris-block>
       </div>
     </div>
     <div nz-col [nzSpan]="6">
       <div class="game-next-box">
         <app-home-tetris-block [isNext]="true"
-                               [data]="remoteNext.data"
+                               [data]="remoteNext?.data"
                                [next]="remoteNext"
         ></app-home-tetris-block>
       </div>

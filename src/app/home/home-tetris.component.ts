@@ -2,7 +2,7 @@ import {Component, EventEmitter, HostBinding, OnInit} from '@angular/core';
 import {slideInDownAnimation} from "../shared/animations";
 import {getRandom, Square, squareFactory} from "./home-tetris.model";
 import {HomeTetrisService} from "./home-tetris.service";
-
+declare let $: any;
 @Component({
   selector: 'app-home-tetris',
   templateUrl: './home-tetris.component.html',
@@ -55,6 +55,8 @@ export class HomeTetrisComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
   remoteNext;
+  curType;
+  curDirective;
   next;
   time = 0;
   remoteTime = 0;
@@ -64,10 +66,13 @@ export class HomeTetrisComponent implements OnInit {
   msg: string;
   constructor(private tetrisService: HomeTetrisService) {}
   ngOnInit() {
+    this.curType = getRandom(7);
+    this.curDirective = getRandom(4);
     this.generateSquare();
   }
   generateSquare() {
     this.next = squareFactory();
+    this.remoteNext = squareFactory(this.next.type, this.next.directive);
   }
   changeNext() {
     this.generateSquare();
@@ -81,12 +86,12 @@ export class HomeTetrisComponent implements OnInit {
   changeGameOver() {
     this.isGameOver = true;
   }
-  start() {
-    this.isGameOver = false;
-    this.tetrisService.commandEmitter.emit('start');
+  changeRemoteData($event) {
+    this.remoteData = $event;
   }
-  // test
-  testUp() {
-    this.tetrisService.commandEmitter.emit('up');
+  ready($event) {
+    $($event.target).blur();
+    this.isGameOver = false;
+    this.tetrisService.commandEmitter.emit('ready');
   }
 }
