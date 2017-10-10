@@ -15,10 +15,11 @@
         <app-home-tetris-block [data]="gameData"
                                [remoteData]="remoteData"
                                [next]="next"
-                               [isHost]="true"
                                [curType]="curType"
                                [curDirective]="curDirective"
                                (nextEmitter)="changeNext($event)"
+                               (remoteNextEmitter)="changeRemoteNext($event)"
+                               (remoteDataEmitter)="changeRemoteData($event)"
                                (timeChange)="changeTime($event)"
                                (scoreChange)="changeScore($event)"
                                (isGameOverChange)="changeGameOver()"
@@ -27,11 +28,7 @@
     </div>
     <div nz-col [nzSpan]="6">
       <div class="game-next-box">
-        <app-home-tetris-block [isNext]="true"
-                               [isHost]="true"
-                               [data]="next?.data"
-                               [next]="next"
-        ></app-home-tetris-block>
+        <app-home-tetris-block-next [data]="next?.data"></app-home-tetris-block-next>
       </div>
       <div class="game-info">
         <p>已经用时：{{time}}s</p>
@@ -39,24 +36,18 @@
         <p [hidden]="!isGameOver">GAME OVER</p>
         <div>
           <button nz-button [nzType]="'primary'" (click)="ready($event)">准备</button>
+          <button nz-button [nzType]="'primary'" (click)="doTry($event)">练习</button>
         </div>
       </div>
     </div>
     <div nz-col [nzSpan]="6">
       <div class="host-game-box">
-        <app-home-tetris-block [data]="remoteData"
-                               [next]="remoteNext"
-                               [isHost]="false"
-                               (remoteDataEmitter)="changeRemoteData($event)"
-        ></app-home-tetris-block>
+        <app-home-tetris-block-remote [data]="remoteData"></app-home-tetris-block-remote>
       </div>
     </div>
     <div nz-col [nzSpan]="6">
       <div class="game-next-box">
-        <app-home-tetris-block [isNext]="true"
-                               [data]="remoteNext?.data"
-                               [next]="remoteNext"
-        ></app-home-tetris-block>
+        <app-home-tetris-block-next [data]="remoteNext?.data"></app-home-tetris-block-next>
       </div>
       <div class="game-info">
         <p>已经用时：{{remoteTime}}s</p>

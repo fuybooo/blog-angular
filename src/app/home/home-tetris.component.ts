@@ -66,16 +66,19 @@ export class HomeTetrisComponent implements OnInit {
   msg: string;
   constructor(private tetrisService: HomeTetrisService) {}
   ngOnInit() {
-    this.curType = getRandom(7);
-    this.curDirective = getRandom(4);
-    this.generateSquare();
   }
   generateSquare() {
     this.next = squareFactory();
-    this.remoteNext = squareFactory(this.next.type, this.next.directive);
   }
-  changeNext() {
-    this.generateSquare();
+  changeNext($event) {
+    if ($event) {
+      this.next = squareFactory($event.type, $event.directive);
+    } else {
+      this.generateSquare();
+    }
+  }
+  changeRemoteNext($event) {
+    this.remoteNext = squareFactory($event.type, $event.directive);
   }
   changeTime($event) {
     this.time = $event;
@@ -93,5 +96,11 @@ export class HomeTetrisComponent implements OnInit {
     $($event.target).blur();
     this.isGameOver = false;
     this.tetrisService.commandEmitter.emit('ready');
+  }
+  doTry($event) {
+    $($event.target).blur();
+    this.isGameOver = false;
+    this.tetrisService.commandEmitter.emit('try');
+    this.generateSquare();
   }
 }

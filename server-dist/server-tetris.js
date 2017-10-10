@@ -13,6 +13,14 @@
             return clientMap_1[client._count - 1];
         }
     };
+    var bindListener_1 = function (client, event) { return client.on(event, function (data) {
+        if (data) {
+            getAnother_1(client).emit(event, data);
+        }
+        else {
+            getAnother_1(client).emit(event);
+        }
+    }); };
     io.on('connection', function (client) {
         // 连接时
         client._count = ++count_1;
@@ -29,14 +37,17 @@
             var another = getAnother_1(client);
             if (another && another._ready) {
                 var data = { type: Math.floor(Math.random() * 7), directive: Math.floor(Math.random() * 4) };
+                var nextData = { type: Math.floor(Math.random() * 7), directive: Math.floor(Math.random() * 4) };
                 client.emit('start', data);
                 another.emit('start', data);
+                client.emit('next', nextData);
+                another.emit('next', nextData);
             }
         });
         // 初始化
-        client.on('init', function (data) {
-            getAnother_1(client).emit('init', data);
-        });
+        bindListener_1(client, 'init');
+        bindListener_1(client, 'down');
+        bindListener_1(client, 'fixed');
         client.on('disconnect', function () {
         });
     });

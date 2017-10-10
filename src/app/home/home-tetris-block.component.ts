@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Square, squareFactory} from "./home-tetris.model";
+import {getRandom, Square, squareFactory} from "./home-tetris.model";
 import {HomeTetrisService} from "./home-tetris.service";
 declare let $: any;
 declare let io: any;
@@ -11,6 +11,7 @@ let timeCount = 0;
 let scoreCount = 0;
 let tailType = 0;
 let isStarted = false;
+let isTrying = false;
 @Component({
   selector: 'app-home-tetris-block',
   templateUrl: './home-tetris-block.component.html',
@@ -38,44 +39,68 @@ export class HomeTetrisBlockComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isHost) {
-      if (!this.isNext) {
-        this.socket = io('ws://localhost:3000/');
-        this.tetrisService.commandEmitter.subscribe(command => this.socket.emit('ready'));
-        this.watchEvent();
-      } else {
-        this.setData(true);
-      }
-    }
+    this.socket = io('ws://localhost:3000/');
+    this.watchEvent();
   }
   watchEvent() {
-    this.socket.on('start', (data) => {
-      this.current = squareFactory(data.curType, data.curDirective);
-      this.setData(true);
-      // 发送初始化消息
-      this.socket.emit('init', {type: data.curType, directive: data.curDirective});
-      if (!isStarted) {
-        this.reset();
-        isStarted = true;
-        if (!this.isNext) {
-          this.bindKeyEvent();
-          timer = setInterval(() => this.autoDown(), INTERVAL);
-          this.timeFunc();
-        }
+    this.tetrisService.commandEmitter.subscribe(command => {
+      if (command === 'ready') {
+        this.socket.emit('ready');
+      } else if (command === 'try') {
+        isTrying = true;
+        this.start({type: getRandom(7), directive: getRandom(4)});
       }
+    });
+    this.socket.on('start', data => this.start(data));
+    this.socket.on('next', data => {
+      this.nextEmitter.emit(data);
+      this.remoteNextEmitter.emit(data);
     });
     this.socket.on('init', (data) => {
       // 初始化remoteData --> 发送改变之后的remoteData 和 remoteNext给父组件即可
       this.remoteCurrent = squareFactory(data.type, data.directive);
-      console.log(this.remoteData, this.remoteCurrent);
-      this.setData(false);
+      this.setData(4);
       this.remoteDataEmitter.emit(this.remoteData);
     });
+    this.socket.on('down', () => {
+      this.move('down', 2);
+      this.setData(4);
+      this.remoteDataEmitter.emit(this.remoteData);
+    });
+    this.socket.on('fixed', () => {
+      this.setData(7);
+      this.remoteDataEmitter.emit(this.remoteData);
+    });
+  }
+  emitSocket(key, data?) {
+    if (isTrying) {
+      return;
+    }
+    if (data) {
+      this.socket.emit(key, data);
+    } else {
+      this.socket.emit(key);
+    }
+  }
+
+  start(data) {
+    this.current = squareFactory(data.curType, data.curDirective);
+    this.setData(3);
+    // 发送初始化消息
+    this.emitSocket('init', data);
+    // this.socket.emit('init', {type: data.curType, directive: data.curDirective});
+    if (!isStarted) {
+      this.reset();
+      isStarted = true;
+      this.bindKeyEvent();
+      timer = setInterval(() => this.autoDown(), INTERVAL);
+      this.timeFunc();
+    }
   }
 
   reset() {
     console.log('重设游戏');
-    this.setData(true, -1); // 全部清除
+    this.setData(1); // 全部清除
     this.timeChange.emit(0);
     this.scoreChange.emit(0);
   }
@@ -99,7 +124,8 @@ export class HomeTetrisBlockComponent implements OnInit {
 
   autoDown() {
     if (!this.move('down')) {
-      this.setData(true, 1);
+      this.setData(2);
+      this.emitSocket('fixed');
       let line = this.checkClear();
       if (line) {
         this.addScore(line);
@@ -111,6 +137,8 @@ export class HomeTetrisBlockComponent implements OnInit {
       } else {
         this.preformNext();
       }
+    } else {
+      this.emitSocket('down');
     }
   }
 
@@ -147,8 +175,12 @@ export class HomeTetrisBlockComponent implements OnInit {
 
   preformNext() {
     this.current = this.next;
-    this.setData(true);
-    this.nextEmitter.emit();
+    // this.setData(true);
+    if (isTrying) {
+      this.nextEmitter.emit();
+    } else {
+      this.socket.emit('next');
+    }
   }
 
   addTailLines(lines: number[][]) {
@@ -238,55 +270,56 @@ export class HomeTetrisBlockComponent implements OnInit {
 
   /**
    * 设置数据
-   * @param isHost
    * @param state  -1 为 全部清空, 0 为 清空, 1 为 固定, 不传值为设置对应的值
+   * 1.清空游戏区域 this.data
+   * 2.固定 this.data this.current
+   * 3.设置游戏区域的值 this.data this.current
+   * 4.设置对方游戏区域的值 remoteData remoteCurrent
+   * 5.清空上一次的方块 this.data this.current
+   * 6.清空对方游戏区域上一次的方块
+   * 7.固定对方游戏区域的方块
    */
-  setData(isHost, state?) {
-    let data;
-    if (isHost) {
-      data = this.data;
-    } else {
+  setData(state) {
+    let data = this.data;
+    let current = this.current;
+    let square = this.data;
+    let origin = this.current.origin;
+    if (state === 2 || state === 3 || state === 5) {
+      square = this.current.data;
+    } else if (state === 4 || state === 6 || state === 7) {
       data = this.remoteData;
-    }
-    let square;
-    let origin;
-    if (this.isNext) {
-      square = this.next.data;
-      origin = {x: 0, y: 0};
-    } else {
-      if (state === -1) {
-        square = data;
-      }else {
-        if (isHost) {
-          square = this.current.data;
-          origin = this.current.origin;
-        } else {
-          square = this.remoteCurrent.data;
-          origin = this.remoteCurrent.origin;
-        }
-      }
+      current = this.remoteCurrent;
+      square = current.data;
+      origin = current.origin;
     }
     for (let i = 0; i < square.length; i++) {
       for (let j = 0; j < square[i].length; j++) {
-        if (state === -1) {
+        if (state === 1) {
           data[i][j] = 0;
         } else if (this.check(origin, i, j)) {
-          if (state === 1) {
+          if (state === 2 || state === 7) {
             if (data[origin.x + i][origin.y + j] === 2) {
               data[origin.x + i][origin.y + j] = 1;
             }
           } else {
-            data[origin.x + i][origin.y + j] = (state === 0 ? state : square[i][j]);
+            data[origin.x + i][origin.y + j] = ((state === 5 || state === 6) ? 0 : square[i][j]);
           }
         }
       }
     }
+    if (state === 4) {
+      return data;
+    }
   }
 
 
-  move(directive: Direction) {
+  move(directive: Direction, state?) {
+    let current = this.current;
+    if (state === 2) {
+      current = this.remoteCurrent;
+    }
     let nextPlace;
-    let origin = this.current.origin;
+    let origin = current.origin;
     if (directive === 'down') {
       nextPlace = {x: origin.x + 1, y: origin.y};
     } else if (directive === 'left') {
@@ -294,10 +327,18 @@ export class HomeTetrisBlockComponent implements OnInit {
     } else if (directive === 'right') {
       nextPlace = {x: origin.x, y: origin.y + 1};
     }
-    if (this.isValid(nextPlace, this.current.data)) {
-      this.setData(true, 0); // 清除
-      this.current.move(directive);
-      this.setData(true);
+    if (this.isValid(nextPlace, current.data)) {
+      if (state === 2) {
+        this.setData(6); // 清除remote
+      } else {
+        this.setData(5); // 清除
+      }
+      current.move(directive);
+      if (state === 2) {
+        this.setData(6); // 清除remote
+      } else {
+        this.setData(3); // 清除
+      }
       return true;
     } else {
       return false;
@@ -306,9 +347,9 @@ export class HomeTetrisBlockComponent implements OnInit {
 
   rotate() {
     if (this.isValid(this.current.origin, this.current.getRotateData())) {
-      this.setData(true, 0); // 清除
+      this.setData(5); // 清除
       this.current.rotate();
-      this.setData(true);
+      this.setData(3);
     }
   }
 
