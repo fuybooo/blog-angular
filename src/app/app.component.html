@@ -2,9 +2,7 @@
   <nz-header>
     <div class="logo"></div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" class="lh64i">
-      <li nz-menu-item>首页</li>
-      <li nz-menu-item>用户</li>
-      <li nz-menu-item>设置</li>
+      <li nz-menu-item *ngFor="let menu of menus" (click)="routeTo(menu.route)">{{menu.label}}</li>
     </ul>
   </nz-header>
   <nz-layout class="content-container">

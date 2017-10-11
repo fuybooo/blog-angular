@@ -1,6 +1,6 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {slideInDownAnimation} from "../shared/animations";
-import {Square, squareFactory} from "./home-tetris.model";
+import {Square, squareFactory} from "./tetris.model";
 declare let $: any;
 let timer = null;
 let INTERVAL = 200;
@@ -8,11 +8,11 @@ type Direction = 'left' | 'right' | 'down';
 let timeCount = 0;
 let tailType = 0;
 @Component({
-  selector: 'app-home-tetris',
-  templateUrl: './home-tetris.component.html',
+  selector: 'app-tetris',
+  templateUrl: './tetris.component.html',
   animations: [slideInDownAnimation]
 })
-export class HomeTetrisComponent implements OnInit {
+export class TetrisComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   gameData = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -100,9 +100,9 @@ export class HomeTetrisComponent implements OnInit {
       this.time++;
       timeCount = 0;
       // 测试干扰
-      if (this.time !== 0 && this.time % 10 === 0) {
-        this.addTailLines(this.generateLines(1));
-      }
+      // if (this.time !== 0 && this.time % 10 === 0) {
+      //   this.addTailLines(this.generateLines(1));
+      // }
       // 测试干扰 end
     }
   }

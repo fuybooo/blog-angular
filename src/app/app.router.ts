@@ -17,6 +17,11 @@ export const routes: Routes = [
     loadChildren: 'app/user/user.module#UserModule'
   },
   {
+    path: 'app/tetris',
+    canActivate: [HomeGuard],
+    loadChildren: 'app/tetris/tetris.module#TetrisModule'
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: '/app/home'
