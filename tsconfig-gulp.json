@@ -16,6 +16,7 @@
     ]
   },
   "files": [
-    "server/server.ts"
+    "server/server.ts",
+    "server/server-tetris.ts"
   ]
 }

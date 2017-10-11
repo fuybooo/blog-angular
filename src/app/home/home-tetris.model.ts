@@ -1,4 +1,5 @@
-const squares = [
+declare let $: any;
+export const squares = [
   // 竖杠
   [
     [
@@ -210,7 +211,7 @@ export class Square {
     }
   }
   getData() {
-    return squares[this.type][this.directive];
+    return $.extend(true, [], squares[this.type][this.directive]);
   }
   rotate() {
     this.directive = (++this.directive) % 4;
@@ -221,11 +222,18 @@ export class Square {
     if (testDirective === 4) {
       testDirective = 0;
     }
-    return squares[this.type][testDirective];
+    return $.extend(true, [], squares[this.type][testDirective]);
   }
 }
-export function squareFactory() {
-  let type = Math.floor(Math.random() * 7);
-  let directive = Math.floor(Math.random() * 4);
-  return new Square(type, directive, squares[type][directive]);
+export function squareFactory(type?, directive?) {
+  if (type === undefined) {
+    type = getRandom(7);
+  }
+  if (directive === undefined) {
+    directive = getRandom(4);
+  }
+  return new Square(type, directive, $.extend(true, [], squares[type][directive]));
+}
+export function getRandom(num) {
+  return Math.floor(Math.random() * num);
 }
