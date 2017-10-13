@@ -224,8 +224,6 @@ export class Square {
     return squares[this.type][testDirective];
   }
 }
-export function squareFactory() {
-  let type = Math.floor(Math.random() * 7);
-  let directive = Math.floor(Math.random() * 4);
+export function squareFactory(type = Math.floor(Math.random() * 7), directive = Math.floor(Math.random() * 4)) {
   return new Square(type, directive, squares[type][directive]);
 }

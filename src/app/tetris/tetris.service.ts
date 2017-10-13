@@ -144,15 +144,10 @@ export class TetrisService {
     }
   }
   preformNext(data, current, next) {
-    let _next = squareFactory();
     current.type = next.type;
     current.directive = next.directive;
     current.data = $.extend(true, [], next.data);
     current.origin = $.extend(true, {}, next.origin);
     this.setData(data, current);
-    next.type = _next.type;
-    next.directive = _next.directive;
-    next.data = $.extend(true, [], _next.data);
-    next.origin = $.extend(true, {}, _next.origin);
   }
 }

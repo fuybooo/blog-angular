@@ -25,29 +25,28 @@
         // 连接时
         client._count = ++count_1;
         clientMap_1[count_1] = client;
-        // if (count % 2 === 1) {
-        //   client.emit('waiting', 'Waiting for another person');
-        // } else {
-        //   client.emit('start');
-        //   clientMap[count - 1].emit('start');
-        // }
         // 准备
         client.on('ready', function () {
             client._ready = true;
             var another = getAnother_1(client);
             if (another && another._ready) {
-                var data = { type: Math.floor(Math.random() * 7), directive: Math.floor(Math.random() * 4) };
-                var nextData = { type: Math.floor(Math.random() * 7), directive: Math.floor(Math.random() * 4) };
-                client.emit('start', data);
-                another.emit('start', data);
-                client.emit('next', nextData);
-                another.emit('next', nextData);
+                client.emit('start');
+                another.emit('start');
             }
         });
         // 初始化
-        bindListener_1(client, 'init');
+        bindListener_1(client, 'next');
+        bindListener_1(client, 'current');
+        bindListener_1(client, 'setData');
         bindListener_1(client, 'down');
-        bindListener_1(client, 'fixed');
+        bindListener_1(client, 'checkClear');
+        bindListener_1(client, 'checkGameOver');
+        bindListener_1(client, 'preformNext');
+        bindListener_1(client, 'left');
+        bindListener_1(client, 'right');
+        bindListener_1(client, 'rotate');
+        bindListener_1(client, 'fall');
+        bindListener_1(client, 'addLine');
         client.on('disconnect', function () {
         });
     });
