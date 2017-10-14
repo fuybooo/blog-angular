@@ -243,36 +243,39 @@ export class TetrisComponent implements OnInit {
     if (this.score <= 30) {
       this.level = 1;
       this.velocity = defaultVelocity;
-    } else if (this.score <= 80) {
+    } else if (this.score <= 60) {
       this.level = 2;
       this.velocity = 800;
-    } else if (this.score <= 140) {
+    } else if (this.score <= 90) {
       this.level = 3;
       this.velocity = 600;
-    } else if (this.score <= 210) {
+    } else if (this.score <= 120) {
       this.level = 4;
       this.velocity = 400;
-    } else if (this.score <= 290) {
+    } else if (this.score <= 150) {
       this.level = 5;
       this.velocity = 300;
-    } else if (this.score <= 380) {
+    } else if (this.score <= 250) {
       this.level = 6;
       this.velocity = 200;
-    } else if (this.score <= 480) {
+    } else if (this.score <= 500) {
       this.level = 7;
-      this.velocity = 100;
-    } else if (this.score <= 590) {
+      this.velocity = 180;
+    } else if (this.score <= 700) {
       this.level = 8;
-      this.velocity = 80;
-    } else if (this.score <= 710) {
+      this.velocity = 160;
+    } else if (this.score <= 900) {
       this.level = 9;
-      this.velocity = 60;
-    } else if (this.score <= 840) {
+      this.velocity = 140;
+    } else if (this.score <= 1100) {
       this.level = 10;
-      this.velocity = 50;
-    } else {
+      this.velocity = 120;
+    } else if (this.score <= 1300) {
       this.level = 11;
-      this.velocity = 40;
+      this.velocity = 100;
+    } else {
+      this.level = 12;
+      this.velocity = 80;
     }
   }
 
