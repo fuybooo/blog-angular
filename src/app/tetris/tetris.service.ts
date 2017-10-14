@@ -48,6 +48,13 @@ export class TetrisService {
       }
     }
   }
+  clearAll(data) {
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        data[i][j] = 0;
+      }
+    }
+  }
   rotate(data, current: Square) {
     if (this.isValid(current.origin, current.getRotateData(), data)) {
       this.setData(data, current, 0); // 清除
@@ -55,7 +62,7 @@ export class TetrisService {
       this.setData(data, current);
     }
   }
-  move(data, current, dir) {
+  move(data, current, dir, onlyValid = false) {
     let nextPlace;
     if (dir === 'down') {
       nextPlace = {x: current.origin.x + 1, y: current.origin.y};
@@ -65,9 +72,11 @@ export class TetrisService {
       nextPlace = {x: current.origin.x, y: current.origin.y + 1};
     }
     if (this.isValid(nextPlace, current.data, data)) {
-      this.setData(data, current, 0); // 清除
-      current.move(dir);
-      this.setData(data, current);
+      if (!onlyValid) {
+        this.setData(data, current, 0); // 清除
+        current.move(dir);
+        this.setData(data, current);
+      }
       return true;
     } else {
       return false;

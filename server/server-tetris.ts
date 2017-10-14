@@ -13,10 +13,15 @@
     }
   };
   let bindListener = (client, event) => client.on(event, (data) => {
-    if (data) {
-      getAnother(client).emit(event, data);
+    let another = getAnother(client);
+    if (another) {
+      if (data) {
+        another.emit(event, data);
+      } else {
+        another.emit(event);
+      }
     } else {
-      getAnother(client).emit(event);
+      client.emit('leave');
     }
   });
   io.on('connection', (client) => {
