@@ -19,12 +19,29 @@ export class TetrisService {
   isValid(pos, data, checkData) {
     for (let i = 0; i < data.length; i++) {
       for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] !== 0 && !this.check(pos, i, j, checkData)) {
+        if ((data[i][j] !== 0 && data[i][j] !== -1) && !this.check(pos, i, j, checkData)) {
           return false;
         }
       }
     }
     return true;
+  }
+  getHeight(current) {
+    let height = 0;
+    for (let i = 0; i < current.data.length; i ++) {
+      let hasBlock = false;
+      for (let j = 0; j < current.data[i].length; j ++) {
+        let item = current.data[i][j];
+        if (item > 2) {
+          hasBlock = true;
+          break;
+        }
+      }
+      if (hasBlock) {
+        height ++;
+      }
+    }
+    return height;
   }
 
   /**
@@ -34,14 +51,54 @@ export class TetrisService {
    * @param state 设置类型 undefined：正常设置；1：设置为固定；0：设置为空，意思为清空当前块
    */
   setData(data, current, state?) {
+    console.log('set', current.height);
+    let height = this.getHeight(current);
+    // 清除投影
+    for (let m = 0; m < data.length; m++) {
+      for (let n = 0; n < data[m].length; n++) {
+        let dataItem = data[m][n];
+        if (dataItem === -1) {
+          data[m][n] = 0;
+        }
+      }
+    }
     for (let i = 0; i < current.data.length; i++) {
       for (let j = 0; j < current.data[i].length; j++) {
+        let currentItem = current.data[i][j];
+        // 如果是色块，则找到对应的投影，设置为-1
+        // if (!state) {
+        //   if (currentItem > 2) {
+        //     // 先遍历行
+        //     for (let m = 0; m < 10; m++) {
+        //       let hasFixed = false;
+        //       // 再遍历列
+        //       for (let n = 0; n < 20; n++) {
+        //         let dataItem = data[n][m];
+        //         if (j + current.origin.y === m) {
+        //           if (dataItem === 1) {
+        //             hasFixed = true;
+        //             data[n][m - 1 - i] = -1;
+        //           }
+        //         }
+        //       }
+        //       if (!hasFixed) {
+        //         let index = 20 - height + i;
+        //         if (height === 1) {
+        //           index = 19;
+        //         }
+        //         data[index][j + current.origin.y] = -1;
+        //       }
+        //     }
+        //   }
+        // }
         if (this.check(current.origin, i, j, data)) {
           if (state === 1) {
-            if (data[current.origin.x + i][current.origin.y + j] === 2) {
+            // 大于2代表该位置是色块
+            if (data[current.origin.x + i][current.origin.y + j] > 2) {
               data[current.origin.x + i][current.origin.y + j] = 1;
             }
           } else {
+            // 设置方块的位置
             data[current.origin.x + i][current.origin.y + j] = (state === 0 ? state : current.data[i][j]);
           }
         }

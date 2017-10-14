@@ -9,6 +9,7 @@ let timeCounter = null;
 let count = 0;
 let INTERVAL = 20;
 let isStarted = false;
+let defaultVelocity = 3000;
 @Component({
   selector: 'app-tetris',
   templateUrl: './tetris.component.html',
@@ -102,10 +103,6 @@ export class TetrisComponent implements OnInit {
       let line = this.tetrisService.checkClear(this.remoteData);
       if (line) {
         this.remoteScore += this.getScore(line);
-        // let addLine = this.getAddLine(line);
-        // if (addLine) {
-        //   this.tetrisService.addTailLines(this.gameData, this.current, this.tetrisService.generateLines(addLine));
-        // }
       }
     });
     this.socket.on('checkGameOver', () => {
@@ -142,7 +139,7 @@ export class TetrisComponent implements OnInit {
   start($event?) {
     if ($event) {
       this.isPractice = true;
-      this.velocity = 1000;
+      this.velocity = defaultVelocity;
       $($event.target).blur();
     }
     this.bindKeyEvent();
@@ -211,9 +208,11 @@ export class TetrisComponent implements OnInit {
           this.changeLevel();
         }
         let addLine = this.getAddLine(line);
-        if (addLine) {
-          this.emitSocket('addLine', addLine);
-          this.tetrisService.addTailLines(this.remoteData, this.remoteCurrent, this.tetrisService.generateLines(addLine));
+        if (!this.isPractice) {
+          if (addLine) {
+            this.emitSocket('addLine', addLine);
+            this.tetrisService.addTailLines(this.remoteData, this.remoteCurrent, this.tetrisService.generateLines(addLine));
+          }
         }
       }
       let gameOver = this.tetrisService.checkGameOver(this.gameData);
@@ -243,7 +242,7 @@ export class TetrisComponent implements OnInit {
   changeLevel() {
     if (this.score <= 30) {
       this.level = 1;
-      this.velocity = 1000;
+      this.velocity = defaultVelocity;
     } else if (this.score <= 80) {
       this.level = 2;
       this.velocity = 800;
