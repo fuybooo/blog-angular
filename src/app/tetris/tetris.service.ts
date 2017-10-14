@@ -4,6 +4,10 @@ declare let $: any;
 @Injectable()
 export class TetrisService {
   tailType = 0;
+  openProjection = true;
+  setOpenProjection(val) {
+    this.openProjection = val;
+  }
   check(pos, x, y, data) {
     if (
       pos.x + x < 0 ||
@@ -26,22 +30,14 @@ export class TetrisService {
     }
     return true;
   }
-  getHeight(current) {
-    let height = 0;
-    for (let i = 0; i < current.data.length; i ++) {
-      let hasBlock = false;
-      for (let j = 0; j < current.data[i].length; j ++) {
-        let item = current.data[i][j];
-        if (item > 2) {
-          hasBlock = true;
-          break;
-        }
-      }
-      if (hasBlock) {
-        height ++;
-      }
+  setProjection(data, current) {
+    let projection = this.checkDown(data, current);
+    let projections = [];
+    while (projection) {
+      projection = this.checkDown(data, projection);
+      projections.push(projection);
     }
-    return height;
+    return projections.slice(-2, -1)[0];
   }
 
   /**
@@ -51,46 +47,33 @@ export class TetrisService {
    * @param state 设置类型 undefined：正常设置；1：设置为固定；0：设置为空，意思为清空当前块
    */
   setData(data, current, state?) {
-    console.log('set', current.height);
-    let height = this.getHeight(current);
-    // 清除投影
-    for (let m = 0; m < data.length; m++) {
-      for (let n = 0; n < data[m].length; n++) {
-        let dataItem = data[m][n];
-        if (dataItem === -1) {
-          data[m][n] = 0;
+    if (this.openProjection) {
+      // 清除投影
+      for (let m = 0; m < data.length; m++) {
+        for (let n = 0; n < data[m].length; n++) {
+          let dataItem = data[m][n];
+          if (dataItem === -1) {
+            data[m][n] = 0;
+          }
+        }
+      }
+      if (!state) {
+        let projection: any = this.setProjection(data, current);
+        // 渲染投影
+        if (projection) {
+          for (let i = 0; i < projection.data.length; i++) {
+            for (let j = 0; j < projection.data[i].length; j++) {
+              let projectionItem = projection.data[i][j];
+              if (projectionItem > 2) {
+                data[projection.origin.x + i][projection.origin.y + j] = -1;
+              }
+            }
+          }
         }
       }
     }
     for (let i = 0; i < current.data.length; i++) {
       for (let j = 0; j < current.data[i].length; j++) {
-        let currentItem = current.data[i][j];
-        // 如果是色块，则找到对应的投影，设置为-1
-        // if (!state) {
-        //   if (currentItem > 2) {
-        //     // 先遍历行
-        //     for (let m = 0; m < 10; m++) {
-        //       let hasFixed = false;
-        //       // 再遍历列
-        //       for (let n = 0; n < 20; n++) {
-        //         let dataItem = data[n][m];
-        //         if (j + current.origin.y === m) {
-        //           if (dataItem === 1) {
-        //             hasFixed = true;
-        //             data[n][m - 1 - i] = -1;
-        //           }
-        //         }
-        //       }
-        //       if (!hasFixed) {
-        //         let index = 20 - height + i;
-        //         if (height === 1) {
-        //           index = 19;
-        //         }
-        //         data[index][j + current.origin.y] = -1;
-        //       }
-        //     }
-        //   }
-        // }
         if (this.check(current.origin, i, j, data)) {
           if (state === 1) {
             // 大于2代表该位置是色块
@@ -135,6 +118,25 @@ export class TetrisService {
         this.setData(data, current);
       }
       return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * 检查是否能够执行向下，如果能执行则返回下一个执行的对象，否则返回false
+   * @param data
+   * @param current
+   * @returns {any}
+   */
+  checkDown(data, current) {
+    let nextPlace = {x: current.origin.x + 1, y: current.origin.y};
+    let nextData = current.data;
+    if (this.isValid(nextPlace, nextData, data)) {
+      return {
+        origin: nextPlace,
+        data: nextData
+      };
     } else {
       return false;
     }

@@ -72,8 +72,18 @@ export class TetrisComponent implements OnInit {
   remoteMsg = '';
   isGameOver = false;
   level = 1;
-  isPractice = false;
+  blockCount = 0;
+  blockCountRate = 0;
+  keyCount = 0;
+  keyCountRate = 0;
+  onefold = 0;
+  twofold = 0;
+  treefold = 0;
+  fourfold = 0;
+  lines = 0;
   highest;
+  isPractice = false;
+  isProjection = true;
   private velocity = 400;
   private socket;
 
@@ -146,6 +156,7 @@ export class TetrisComponent implements OnInit {
     this.reset();
     this.next = squareFactory();
     this.current = squareFactory();
+    this.blockCount ++;
     this.emitSocket('next', {type: this.next.type, directive: this.next.directive});
     this.emitSocket('current', {type: this.current.type, directive: this.current.directive});
     this.tetrisService.setData(this.gameData, this.current);
@@ -173,6 +184,15 @@ export class TetrisComponent implements OnInit {
     this.remoteScore = 0;
     this.remoteMsg = '';
     this.isGameOver = false;
+    this.blockCount = 0;
+    this.blockCountRate = 0;
+    this.keyCount = 0;
+    this.keyCountRate = 0;
+    this.onefold = 0;
+    this.twofold = 0;
+    this.treefold = 0;
+    this.fourfold = 0;
+    this.lines = 0;
   }
 
   ready($event) {
@@ -203,6 +223,16 @@ export class TetrisComponent implements OnInit {
       this.emitSocket('checkClear');
       if (line) {
         this.score += this.getScore(line);
+        if (line === 1) {
+          this.onefold ++;
+        } else if (line === 2) {
+          this.twofold ++;
+        } else if (line === 3) {
+          this.treefold ++;
+        } else if (line === 4) {
+          this.fourfold ++;
+        }
+        this.lines += line;
         this.saveHighest();
         if (this.isPractice) {
           this.changeLevel();
@@ -222,6 +252,10 @@ export class TetrisComponent implements OnInit {
         this.isGameOver = true;
       } else {
         this.tetrisService.preformNext(this.gameData, this.current, this.next);
+        this.blockCount ++;
+        if (this.time) {
+          this.blockCountRate = this.blockCount / (this.time / 60);
+        }
         this.next = squareFactory();
         this.emitSocket('preformNext', {type: this.next.type, directive: this.next.directive});
       }
@@ -316,7 +350,10 @@ export class TetrisComponent implements OnInit {
     return lineNum;
   }
 
-  stop() {
+  stop($event?) {
+    if ($event) {
+      $($event.target).blur();
+    }
     if (timer) {
       clearInterval(timer);
       clearInterval(timeCounter);
@@ -331,22 +368,33 @@ export class TetrisComponent implements OnInit {
     $('body').on('keydown.square.operate', (e) => {
       const keyCode = e.which;
       if (keyCode === 37) {
+        this.calcKeyEvent();
         this.tetrisService.move(this.gameData, this.current, 'left');
         this.emitSocket('left');
       } else if (keyCode === 38) {
+        this.calcKeyEvent();
         this.tetrisService.rotate(this.gameData, this.current);
         this.emitSocket('rotate');
       } else if (keyCode === 39) {
+        this.calcKeyEvent();
         this.tetrisService.move(this.gameData, this.current, 'right');
         this.emitSocket('right');
       } else if (keyCode === 40) {
+        this.calcKeyEvent();
         this.tetrisService.move(this.gameData, this.current, 'down');
         this.emitSocket('down');
       } else if (keyCode === 32) {
+        this.calcKeyEvent();
         this.fall(this.gameData, this.current);
         this.emitSocket('fall');
       }
     });
+  }
+  calcKeyEvent() {
+    this.keyCount ++;
+    if (this.time) {
+      this.keyCountRate = this.keyCount / (this.time / 60);
+    }
   }
   bindStartKeyEvent() {
     $('body').on('keydown.square.enter', (e) => {
@@ -366,6 +414,16 @@ export class TetrisComponent implements OnInit {
 
   fall(data, current) {
     while (this.tetrisService.move(data, current, 'down')) {
+    }
+  }
+  closeProjection($event) {
+    $($event.target).blur();
+    if (this.isProjection) {
+      this.isProjection = false;
+      this.tetrisService.openProjection = false;
+    } else {
+      this.isProjection = true;
+      this.tetrisService.openProjection = true;
     }
   }
 }

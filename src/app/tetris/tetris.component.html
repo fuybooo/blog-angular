@@ -17,8 +17,20 @@
         <p [hidden]="!isPractice">等级：{{level}}</p>
         <p>最高记录：{{highest}}</p>
         <p>{{msg}}</p>
-        <button nz-button [nzType]="'primary'" (click)="start($event)">练习</button>
-        <button nz-button [nzType]="'primary'" (click)="ready($event)">准备</button>
+        <p>按键次数：{{keyCount}}</p>
+        <p>每分钟按键次数：{{keyCountRate | number: '.2-2'}}</p>
+        <p>方块数：{{blockCount}}</p>
+        <p>每分钟方块数：{{blockCountRate | number: '.2-2'}}</p>
+        <p>消除1行数：{{onefold}}</p>
+        <p>消除2行数：{{twofold}}</p>
+        <p>消除3行数：{{treefold}}</p>
+        <p>消除4行数：{{fourfold}}</p>
+        <p>消除总行数：{{lines}}</p>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="start($event)">练习</button>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="ready($event)">准备</button>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="stop($event)">结束</button>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="stop($event)">暂停</button>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="closeProjection($event)">{{isProjection? '关闭' : '开启' }}投影</button>
       </div>
     </div>
     <div nz-col [nzSpan]="6">
