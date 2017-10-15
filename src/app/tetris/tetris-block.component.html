@@ -1,6 +1,37 @@
 <ng-container *ngFor="let outer of data; let i = index;">
   <div class="tetris-block" *ngFor="let inner of outer; let j = index;"
-       [ngClass]="{'block--1': inner === -1, 'block-none': inner === 0, 'block-done': inner === 1, 'block-0': inner === 20, 'block-1': inner === 21, 'block-2': inner === 22, 'block-3': inner === 23, 'block-4': inner === 24, 'block-5': inner === 25, 'block-6': inner === 26}"
+       [ngClass]="{
+         'block-projection-0': inner === -20,
+         'block-projection-1': inner === -21,
+         'block-projection-2': inner === -22,
+         'block-projection-3': inner === -23,
+         'block-projection-4': inner === -24,
+         'block-projection-5': inner === -25,
+         'block-projection-6': inner === -26,
+         'block-projection': inner <= -20,
+         'block-current-0': inner === 20,
+         'block-current-1': inner === 21,
+         'block-current-2': inner === 22,
+         'block-current-3': inner === 23,
+         'block-current-4': inner === 24,
+         'block-current-5': inner === 25,
+         'block-current-6': inner === 26,
+         'block-fixed-0': inner === 10,
+         'block-fixed-1': inner === 11,
+         'block-fixed-2': inner === 12,
+         'block-fixed-3': inner === 13,
+         'block-fixed-4': inner === 14,
+         'block-fixed-5': inner === 15,
+         'block-fixed-6': inner === 16,
+         'block-fixed-7': inner === 17,
+         'block-none': inner === 0,
+         'block-current': inner >= 20,
+         'block-fixed': inner >= 10 && inner < 20,
+         'block-top': inner >= 10 && data[i - 1] && data[i - 1][j] >= 10,
+         'block-right': inner >= 10 && data[i][j + 1] >= 10,
+         'block-bottom': i === 19,
+         'block-left': j === 0
+       }"
        [ngStyle]="{top: i * 20 + 'px', left: j * 20 + 'px'}"
   ></div>
 </ng-container>

@@ -206,6 +206,9 @@ export class TetrisComponent implements OnInit {
     this.tetrisService.clearAll(this.remoteData);
     this.emitSocket('ready');
   }
+  pause($event) {
+    $($event.target).blur();
+  }
 
   autoDown() {
     ++count;
@@ -274,37 +277,37 @@ export class TetrisComponent implements OnInit {
    * @returns {number}
    */
   changeLevel() {
-    if (this.score <= 30) {
+    if (this.score <= 70) {
       this.level = 1;
       this.velocity = defaultVelocity;
-    } else if (this.score <= 60) {
+    } else if (this.score <= 160) {
       this.level = 2;
       this.velocity = 800;
-    } else if (this.score <= 90) {
+    } else if (this.score <= 260) {
       this.level = 3;
       this.velocity = 600;
-    } else if (this.score <= 120) {
+    } else if (this.score <= 400) {
       this.level = 4;
       this.velocity = 400;
-    } else if (this.score <= 150) {
+    } else if (this.score <= 600) {
       this.level = 5;
       this.velocity = 300;
-    } else if (this.score <= 250) {
+    } else if (this.score <= 860) {
       this.level = 6;
       this.velocity = 200;
-    } else if (this.score <= 500) {
+    } else if (this.score <= 1100) {
       this.level = 7;
       this.velocity = 180;
-    } else if (this.score <= 700) {
+    } else if (this.score <= 1600) {
       this.level = 8;
       this.velocity = 160;
-    } else if (this.score <= 900) {
+    } else if (this.score <= 2000) {
       this.level = 9;
       this.velocity = 140;
-    } else if (this.score <= 1100) {
+    } else if (this.score <= 2500) {
       this.level = 10;
       this.velocity = 120;
-    } else if (this.score <= 1300) {
+    } else if (this.score <= 3300) {
       this.level = 11;
       this.velocity = 100;
     } else {

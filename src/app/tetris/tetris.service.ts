@@ -5,16 +5,13 @@ declare let $: any;
 export class TetrisService {
   tailType = 0;
   openProjection = true;
-  setOpenProjection(val) {
-    this.openProjection = val;
-  }
   check(pos, x, y, data) {
     if (
       pos.x + x < 0 ||
       pos.x + x >= data.length ||
       pos.y + y < 0 ||
       pos.y + y >= data[0].length ||
-      data[pos.x + x][pos.y + y] === 1
+      (data[pos.x + x][pos.y + y] >= 10 && data[pos.x + x][pos.y + y] < 20)
     ) {
       return false;
     }
@@ -23,7 +20,7 @@ export class TetrisService {
   isValid(pos, data, checkData) {
     for (let i = 0; i < data.length; i++) {
       for (let j = 0; j < data[i].length; j++) {
-        if ((data[i][j] !== 0 && data[i][j] !== -1) && !this.check(pos, i, j, checkData)) {
+        if (data[i][j] > 0 && !this.check(pos, i, j, checkData)) {
           return false;
         }
       }
@@ -52,7 +49,7 @@ export class TetrisService {
       for (let m = 0; m < data.length; m++) {
         for (let n = 0; n < data[m].length; n++) {
           let dataItem = data[m][n];
-          if (dataItem === -1) {
+          if (dataItem <= -20) {
             data[m][n] = 0;
           }
         }
@@ -65,7 +62,7 @@ export class TetrisService {
             for (let j = 0; j < projection.data[i].length; j++) {
               let projectionItem = projection.data[i][j];
               if (projectionItem > 2) {
-                data[projection.origin.x + i][projection.origin.y + j] = -1;
+                data[projection.origin.x + i][projection.origin.y + j] = - projectionItem;
               }
             }
           }
@@ -77,8 +74,9 @@ export class TetrisService {
         if (this.check(current.origin, i, j, data)) {
           if (state === 1) {
             // 大于2代表该位置是色块
-            if (data[current.origin.x + i][current.origin.y + j] > 2) {
-              data[current.origin.x + i][current.origin.y + j] = 1;
+            let item = data[current.origin.x + i][current.origin.y + j];
+            if (item >= 20) {
+              data[current.origin.x + i][current.origin.y + j] = + ('1' + (item + '')[1]);
             }
           } else {
             // 设置方块的位置
@@ -144,7 +142,8 @@ export class TetrisService {
   checkGameOver(data) {
     let gameOver = false;
     for (let i = 0; i < 10; i++) {
-      if (data[1][i] === 1) {
+      // 判断fixed
+      if (data[1][i] >= 10 && data[1][i] < 20) {
         gameOver = true;
       }
     }
@@ -155,7 +154,8 @@ export class TetrisService {
     for (let i = data.length - 1; i >= 0; i--) {
       let clear = true;
       for (let j = 0; j < data[0].length; j++) {
-        if (data[i][j] !== 1) {
+        // 判断fixed
+        if (data[i][j] < 10 || data[i][j] >= 20) {
           clear = false;
           break;
         }
@@ -183,7 +183,8 @@ export class TetrisService {
       for (let j = 0; j < 10; j++) {
         if (this.tailType % 2) {
           if (j % 2) {
-            line.push(1);
+            // 自动增加的行
+            line.push(17);
           } else {
             line.push(0);
           }
@@ -191,7 +192,8 @@ export class TetrisService {
           if (j % 2) {
             line.push(0);
           } else {
-            line.push(1);
+            // 自动增加的行
+            line.push(17);
           }
         }
       }

@@ -1,5 +1,13 @@
 <div>
   <h2>websocket练习——单机火拼俄罗斯</h2>
+  <p class="lh64">
+    旋转：<i class="anticon anticon-arrow-up"></i><span class="pl20"></span>
+    右：<i class="anticon anticon-arrow-right"></i><span class="pl20"></span>
+    下：<i class="anticon anticon-arrow-down"></i><span class="pl20"></span>
+    左：<i class="anticon anticon-arrow-left"></i><span class="pl20"></span>
+    坠落：空格<span class="pl20"></span>
+    开始：回车<span class="pl20"></span>
+    准备：shift + 回车</p>
   <div nz-row [nzGutter]="0">
     <div nz-col [nzSpan]="6">
       <div class="host-game-box">
@@ -29,7 +37,7 @@
         <button class="dbi" nz-button [nzType]="'primary'" (click)="start($event)">练习</button>
         <button class="dbi" nz-button [nzType]="'primary'" (click)="ready($event)">准备</button>
         <button class="dbi" nz-button [nzType]="'primary'" (click)="stop($event)">结束</button>
-        <button class="dbi" nz-button [nzType]="'primary'" (click)="stop($event)">暂停</button>
+        <button class="dbi" nz-button [nzType]="'primary'" (click)="pause($event)">暂停</button>
         <button class="dbi" nz-button [nzType]="'primary'" (click)="closeProjection($event)">{{isProjection? '关闭' : '开启' }}投影</button>
       </div>
     </div>
