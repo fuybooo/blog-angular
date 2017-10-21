@@ -1,14 +1,11 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {slideInDownAnimation} from "../shared/animations";
+import {Component, OnInit} from '@angular/core';
 declare let io: any;
 
 @Component({
   selector: 'app-home-chat',
   templateUrl: './home-chat.component.html',
-  animations: [slideInDownAnimation]
 })
 export class HomeChatComponent implements OnInit {
-  @HostBinding('@routeAnimation') routeAnimation = true;
   inputValue;
   messages: any[] = [];
   socket = io('ws://localhost:3000/');

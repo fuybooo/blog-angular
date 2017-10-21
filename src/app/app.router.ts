@@ -1,5 +1,5 @@
 import {Routes} from "@angular/router";
-import {HomeGuard} from "./shared/guard/home-guard.service";
+import {SiderGuard} from "./shared/guard/sider-guard.service";
 export const routes: Routes = [
   {
     path: '',
@@ -8,18 +8,23 @@ export const routes: Routes = [
   },
   {
     path: 'app/home',
-    canActivate: [HomeGuard],
+    canActivate: [SiderGuard],
     loadChildren: 'app/home/home.module#HomeModule'
   },
   {
     path: 'app/user',
-    canActivate: [HomeGuard],
+    canActivate: [SiderGuard],
     loadChildren: 'app/user/user.module#UserModule'
   },
   {
     path: 'app/tetris',
-    canActivate: [HomeGuard],
+    canActivate: [SiderGuard],
     loadChildren: 'app/tetris/tetris.module#TetrisModule'
+  },
+  {
+    path: 'app/amap',
+    canActivate: [SiderGuard],
+    loadChildren: 'app/amap/amap.module#AmapModule'
   },
   {
     path: '**',

@@ -2,7 +2,11 @@
   <nz-header>
     <div class="logo"></div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" class="lh64i">
-      <li nz-menu-item *ngFor="let menu of menus" (click)="routeTo(menu.route)">{{menu.label}}</li>
+      <li nz-menu-item *ngFor="let menu of menus"
+          (click)="routeTo(menu)"
+          [class.ant-menu-item-selected]="menu.active"
+          [class.ant-menu-item-sub-active]="menu.subActive"
+      >{{menu.label}}</li>
     </ul>
   </nz-header>
   <nz-layout class="content-container">
@@ -12,17 +16,17 @@
               [class.ohi]="!enterSide"
               (mouseenter)="enterSide=true"
               (mouseleave)="enterSide=false"
-              [class.dni]="isHome"
+              [class.dni]="isNoSider"
     >
       <ul nz-menu [nzMode]="'inline'" class="h">
-        <li nz-menu-item>用户管理</li>
+        <li nz-menu-item *ngFor="let submenu of submenus" (click)="routeTo(submenu, true)"
+            [class.ant-menu-item-selected]="submenu.active">{{submenu.label}}</li>
       </ul>
     </nz-sider>
-    <nz-layout [class.pl20]="!isHome">
-      <nz-breadcrumb class="m15_0" [class.dni]="isHome">
+    <nz-layout [class.pl20]="!isNoSider">
+      <nz-breadcrumb class="m15_0" [class.dni]="isNoSider">
         <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-        <nz-breadcrumb-item>List</nz-breadcrumb-item>
-        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngFor="let place of placePath">{{place}}</nz-breadcrumb-item>
       </nz-breadcrumb>
       <nz-content class="content-wrap" [class.oai]="enterContent" [class.ohi]="!enterContent" (mouseenter)="enterContent=true" (mouseleave)="enterContent=false">
         <!--content-->

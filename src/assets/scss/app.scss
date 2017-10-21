@@ -160,3 +160,21 @@
 .game-info {
   margin-top: 100px;
 }
+
+.ant-menu-item-sub-active {
+  background-color: #76bcdd;
+  color: #fff;
+}
+.map-search-wrap {
+  position: absolute!important;
+  top: 10px;
+  left: 10px;
+  padding: 5px;
+  background: transparent;
+  .hide-ant-input .ant-input {
+    display: none;
+  }
+  .search-ant-input .ant-input {
+    width: 260px;
+  }
+}

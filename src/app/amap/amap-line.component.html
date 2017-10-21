@@ -1,0 +1,38 @@
+<div class="pr">
+  <div id="map-line" class="min-w1000 min-h530"></div>
+  <div class="map-search-wrap" nz-row [nzGutter]="0" [class.dni]="isLine">
+    <div nz-col [nzSpan]="8">
+      <nz-input [(ngModel)]="searchText" [class.hide-ant-input]="hideSearch" [class.search-ant-input]="!hideSearch">
+        <ng-template #addOnAfter><i class="anticon anticon-search" (click)="searchPoint()"></i></ng-template>
+      </nz-input>
+    </div>
+  </div>
+  <div class="map-search-wrap" nz-row [nzGutter]="0" [class.dni]="!isLine">
+    <div nz-col [nzSpan]="18">
+      <div nz-row [nzGutter]="0">
+        <div nz-col [nzSpan]="4">
+          <button nz-button (click)="back()"><i class="anticon anticon-left"></i></button>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-datepicker
+            (ngModelChange)="startDate=$event;startValueChange()"
+            [ngModel]="startDate"
+            [nzDisabledDate]="disabledStartDate"
+            [nzFormat]="'YYYY-MM-DD'"
+            [nzPlaceHolder]="'开始日期'"></nz-datepicker>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-datepicker
+            (ngModelChange)="endDate=$event;endValueChange()"
+            [ngModel]="endDate"
+            [nzDisabledDate]="disabledEndDate"
+            [nzFormat]="'YYYY-MM-DD'"
+            [nzPlaceHolder]="'结束日期'"></nz-datepicker>
+        </div>
+        <div nz-col [nzSpan]="4">
+          <button nz-button (click)="searchLine()"><i class="anticon anticon-left"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
